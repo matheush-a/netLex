@@ -27,7 +27,21 @@ module.exports = {
     },
 
     topWords: function(doc, count, minWordLength){
-        throw new Error("Not implemented exception")
+        const documentContentWords = this.stringToWordsArray(doc.content);
+        const minimumLengthWords = this.filterByWordLength(documentContentWords, minWordLength);
+        const countSameWord = this.countSameWord(minimumLengthWords);
+
+        // A função sort não é uma biblioteca
+        const sortedWords = Object.entries(countSameWord).sort((a, b) => b[1] - a[1]);
+        const topWords = [];
+
+        sortedWords.forEach((item, index) => {
+            if(index < count) {
+                topWords.push(item[0]);
+            }
+        })
+
+        return topWords;
     },
 
     stringToWordsArray: function(text) {
@@ -36,6 +50,26 @@ module.exports = {
 
     stringToSentencesArray: function(text) {
         return text.match(/[^\.|\n|\;|\:!\?]+[\.|\n|\;|\:!\?]+/gi);
+    },
+
+    filterByWordLength: function(array, minWordLength) {
+        return array.filter((item) => item.toLowerCase().length >= minWordLength);
+    },
+
+    countSameWord: function(minimumLengthWords) {
+        const countSameWord = [];
+
+        minimumLengthWords.forEach((item) => {
+            const lowerCase = item.toLowerCase();
+
+            if(countSameWord[lowerCase] !== undefined) {
+                return countSameWord[lowerCase]++;
+            }
+
+            countSameWord[lowerCase] = 1;
+        })
+
+        return countSameWord;
     }
 }
 

@@ -101,7 +101,7 @@ Você deve implementar uma função que retorna as frases do texto em que uma de
 
 3. Problema 3 - Top Words
 
-    rota: documents/word-sentences
+    rota: documents/word-sentences ** top-words **
     body: {
         count: number,
         minWordLength: number
