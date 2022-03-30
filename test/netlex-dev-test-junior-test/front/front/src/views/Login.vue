@@ -1,7 +1,13 @@
 <template>
     <section class="view">
-        <Form/>
-        <Toast :errorText="'Toast falha'"/>
+        <Form
+            @unauthorized="showToast = true"
+        />
+        <Toast 
+            :errorText="'Login inválido'"
+            :toShow="showToast"
+            @closed="showToast = false"
+        />
     </section>
 </template>
 
@@ -13,6 +19,12 @@ export default {
     components: {
         Form,
         Toast
+    },
+
+    data() {
+        return {
+            showToast: false
+        }
     }
 }
 

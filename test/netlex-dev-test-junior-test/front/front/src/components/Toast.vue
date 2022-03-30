@@ -1,10 +1,14 @@
 <template>
-    <section class="toast">
+    <section class="toast" v-show="show">
         <div>
             {{errorText}}
         </div>
         <div>
-            <img src="/assets/icons/icon-x.svg" alt="Fechar toast">
+            <img 
+                src="/assets/icons/icon-x.svg" 
+                alt="Fechar toast"
+                @click="closeAndEmit"
+            >
         </div>
     </section>
 </template>
@@ -12,8 +16,29 @@
 <script>
 export default {
     props: [
-        "errorText"
-    ]
+        "errorText",
+        "toShow"
+    ],
+
+    data() {
+        return {
+            show: false
+        }
+    },
+
+    methods: {
+        closeAndEmit() {
+            this.show = false
+            this.$emit("closed")
+        }
+    },
+
+    watch: {
+        toShow(newValue) {
+            this.show = newValue
+        }
+    }
+
 }
 </script>
 

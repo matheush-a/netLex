@@ -1,25 +1,65 @@
 <template>
-    <section class="container">
+    <form 
+        class="container"
+        @submit.prevent="login"
+    >
         <div class="header">
             Login
         </div>
         <div class="main"> 
             <label for="email">E-mail</label>
-            <input type="text" class="email"/>
+            <input 
+                type="text" 
+                class="email"
+                v-model="email"
+            />
 
             <label for="password">Senha</label>
-            <input type="password" class="password"/>
+            <input 
+                type="password"
+                class="password"
+                v-model="password"
+            />
 
-            <default-button :text="'Entrar'"/>
+            <default-button 
+                :text="'Entrar'"
+                :type="'submit'"
+            />
         </div>
-    </section>
+    </form>
 </template>
 
 <script>
 import DefaultButton from '../DefaultButton.vue'
+import AuthServices from '../../services/auth.services'
 
 export default {
   components: { DefaultButton },
+
+  data() {
+      return {
+            email: '',
+            password: ''
+      }
+  },
+
+  methods: {
+      async login() {
+          const response = await AuthServices.login({
+              email: this.email,
+              password: this.password
+          }).catch(e => {
+              this.$emit('unauthorized')
+          })
+
+          if(!response){
+              return false;
+          }
+          
+          this.$cookie.set('token', response.token, 2)
+          this.$router.push('/home/method1')
+      }
+  }
 }
 </script>
 

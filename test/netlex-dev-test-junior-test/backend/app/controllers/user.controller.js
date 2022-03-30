@@ -3,13 +3,16 @@ const routes = new Router();
 const User = require("../models/user");
 require("dotenv-safe").config();
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
-routes.post(`/users/login`, async (req, res) => {
+routes.post(`/users/login`, cors(), async (req, res) => {
   const user = await User.findOne({
     where: { email: req.body.email, password: req.body.password },
   });
 
-  if (!user) throw new Error(exception, "User not found");
+  if (!user) {
+    res.status(401).send()
+  }
 
   const token = jwt.sign(
     {

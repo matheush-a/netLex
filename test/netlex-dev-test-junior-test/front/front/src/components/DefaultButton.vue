@@ -1,5 +1,9 @@
 <template>
-    <button class="button">
+    <button 
+        class="button"
+        @click="emitClick"
+        :type="type"
+    >
         {{text}}
     </button>
 </template>
@@ -7,8 +11,15 @@
 <script>
 export default {
     props: [
-        "text"
-    ]
+        "text",
+        "type"
+    ],
+
+    methods: {
+        emitClick() {
+            this.$emit('click');
+        }
+    }
 }
 </script>
 
