@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "./axios-services"
 import VueCookie from "vue-cookie";
 
 export default {
