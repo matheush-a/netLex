@@ -1,6 +1,6 @@
 import Login from '../views/Login'
 
 export default {
-    path: '/login',
+    path: '/',
     component: Login
 }

@@ -14,13 +14,13 @@ routes.post(`/documents/word-frequency`, cors(), checkLogin, async (req, res) =>
 routes.post(`/documents/word-sentences`, cors(), checkLogin, async (req, res) => {
     const document = await Document.findOne();
     const result = DocumentHelper.wordSentences(document, req.body.word);
-    res.send(`${result}`);
+    res.send(result);
 });
 
 routes.post(`/documents/top-words`, cors(), checkLogin, async (req, res) => {
     const document = await Document.findOne();
     const result = DocumentHelper.topWords(document, req.body.count, req.body.minWordLength);
-    res.send(`${result}`);
+    res.send(result);
 });
 
 module.exports = routes;

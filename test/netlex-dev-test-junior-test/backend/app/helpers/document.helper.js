@@ -37,7 +37,7 @@ module.exports = {
 
         sortedWords.forEach((item, index) => {
             if(index < count) {
-                topWords.push(item[0]);
+                topWords.push(item);
             }
         })
 
